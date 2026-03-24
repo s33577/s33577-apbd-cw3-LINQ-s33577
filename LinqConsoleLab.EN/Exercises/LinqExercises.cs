@@ -69,6 +69,13 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task03_StudentsSortedAlphabetically()
     {
+
+        var method = from s in UniversityData.Students
+            orderby s.FirstName ascending, s.LastName ascending
+            select $"{s.IndexNumber}, {s.FirstName}, {s.LastName}";
+        
+        return method;
+        
         throw NotImplemented(nameof(Task03_StudentsSortedAlphabetically));
     }
 
@@ -84,6 +91,18 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task04_FirstAnalyticsCourse()
     {
+        var rest = UniversityData.Courses
+            .Where(e => e.Category.Equals("Analytics"))
+            .Select(e => new {e.Title, e.StartDate})
+            .FirstOrDefault();
+
+        if (rest != null)
+        {
+            return [$"{rest.Title}, {rest.StartDate}"];
+        }
+
+        return ["Course dont exists"];
+        
         throw NotImplemented(nameof(Task04_FirstAnalyticsCourse));
     }
 
@@ -101,7 +120,12 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task05_IsThereAnyInactiveEnrollment()
     {
-        throw NotImplemented(nameof(Task05_IsThereAnyInactiveEnrollment));
+        
+        bool res = UniversityData.Enrollments.Any(e => !e.IsActive);
+        
+        yield return $"Enrollment {res.ToString()}";
+        
+        
     }
 
     /// <summary>
@@ -116,7 +140,17 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task06_DoAllLecturersHaveDepartment()
     {
-        throw NotImplemented(nameof(Task06_DoAllLecturersHaveDepartment));
+
+        try
+        {
+            var rest =  UniversityData.Lecturers
+                .Where(e => e.)
+
+        }
+        catch (Exception ex)
+        {
+            throw NotImplemented(nameof(Task06_DoAllLecturersHaveDepartment));
+        }
     }
 
     /// <summary>
