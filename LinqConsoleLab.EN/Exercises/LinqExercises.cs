@@ -15,7 +15,21 @@ public sealed class LinqExercises
     /// WHERE City = 'Warsaw';
     /// </summary>
     public IEnumerable<string> Task01_StudentsFromWarsaw()
+
+
     {
+        // method 1
+        var query = from s in UniversityData.Students
+            where s.City.Equals("Warsaw")
+                select new {s.IndexNumber, s.FirstName, s.LastName, s.City};
+        // method 2
+        var query2 = from s in UniversityData.Students
+            where s.City.Equals("Warsaw")
+            select $"{s.IndexNumber}, {s.FirstName}, {s.LastName}, {s.City}";
+        
+        // method 3
+
+        return query2;
         throw NotImplemented(nameof(Task01_StudentsFromWarsaw));
     }
 
@@ -30,6 +44,16 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task02_StudentEmailAddresses()
     {
+        
+        //Query Sytax
+        var query = from s in UniversityData.Students
+            select s.Email;
+        
+        // Lambda Syntax
+        var method = UniversityData.Students.Select(s => s.Email);
+        
+        return query;
+        
         throw NotImplemented(nameof(Task02_StudentEmailAddresses));
     }
 
@@ -166,6 +190,15 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task11_JoinStudentsWithEnrollments()
     {
+
+        var method = UniversityData.Students.Join(
+            UniversityData.Enrollments,
+            s => s.Id,
+            e => e.StudentId,
+            (s,e) => new{s.FirstName, s.LastName, e.EnrollmentDate} 
+        );
+
+        return method.Select(e => e.FirstName + " " + e.LastName + " " + e.EnrollmentDate);
         throw NotImplemented(nameof(Task11_JoinStudentsWithEnrollments));
     }
 
